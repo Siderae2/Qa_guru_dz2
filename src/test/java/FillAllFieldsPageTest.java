@@ -1,6 +1,7 @@
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,7 +16,7 @@ public class FillAllFieldsPageTest {
         Configuration.browserSize = "1920x1080";
     }
     @Test
-    void setAllFieldsPageTest()  {
+    void setAllFieldsPageTest() {
         open(url_qa_practice);
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
@@ -28,16 +29,15 @@ public class FillAllFieldsPageTest {
         $(".react-datepicker__month-select").selectOptionByValue("3");
         $(".react-datepicker__year-select").selectOptionByValue("1995");
         $(".react-datepicker__day--004").click();
-        $("#subjectsInput").setValue("h");
-        $(byText("Hindi")).click();
+        $("#subjectsInput").setValue("Hindi").sendKeys(Keys.ENTER);
         $("#hobbiesWrapper").$(byText("Reading")).click();
         $("#hobbiesWrapper").$(byText("Music")).click();
         $("#uploadPicture").uploadFromClasspath(fileName);
         $("#currentAddress").setValue("Брянск");
-        $("#stateCity-wrapper").$("#state").click();
+        $("#state").click();
         $("#stateCity-wrapper").$(byText("Haryana")).click();
-        $(byText("Select City")).click();
-        $(byText("Karnal")).click();
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText("Karnal")).click();
         $("#submit").click();
         $(".modal-header").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Вискарик Вкусный"));
@@ -50,8 +50,5 @@ public class FillAllFieldsPageTest {
         $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("opsznH5vIhU.png"));
         $(".table-responsive").$(byText("Address")).parent().shouldHave(text("Брянск"));
         $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("Haryana Karnal"));
-
-
-
     }
 }
